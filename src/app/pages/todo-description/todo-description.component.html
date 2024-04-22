@@ -9,5 +9,7 @@
   <p class="todo-text">{{ todo.title }}</p>
   <p class="todo-text">{{ todo.description }}</p>
   <p class="todo-text">{{todo.date | date: 'dd/MM/yyyy'}}</p>
+
   <a class="btn-edit" [routerLink]="['/edit', todo.id]">Edit</a>
+
 </section>

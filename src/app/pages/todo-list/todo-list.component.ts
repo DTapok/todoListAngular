@@ -1,4 +1,4 @@
-import { Component, inject} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {TodoDescriptionComponent} from "../todo-description/todo-description.component";
 import {TodosService} from '../../todos.service'
 import {Todo} from "../../todo";
@@ -11,18 +11,18 @@ import {RouterModule} from '@angular/router';
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.css'
 })
-export class TodoListComponent {
-  todoList: string;
+export class TodoListComponent implements OnDestroy, OnInit{
+  todoList!:  Todo[];
   todosService: TodosService = inject(TodosService);
-  todo1: Todo = {
-    id: 9999,
-    title: 'Test Home',
-    description:'test',
-    date: new Date(2025,0, 1).toString(),
-    completed: false
-  };
 
-  constructor() {
-    this.todoList = this.todosService.getAllTodo()
+  constructor() {}
+
+  ngOnInit() {
+    this.todoList = this.todosService.getAllTodo();
+    console.log(this.todoList)
+  }
+
+  ngOnDestroy() {
+    // Передача объкта в хранилище  this.todosService.rerecordTodo(test)
   }
 }

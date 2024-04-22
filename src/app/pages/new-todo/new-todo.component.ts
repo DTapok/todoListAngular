@@ -3,6 +3,7 @@ import {RouterModule} from '@angular/router';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {TodosService} from "../../todos.service";
 import {Todo} from '../../todo';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-new-todo',
@@ -15,23 +16,25 @@ import {Todo} from '../../todo';
 export class NewTodoComponent {
   todosService: TodosService = inject(TodosService);
 
-
   applyForm = new FormGroup({
-    title: new FormControl(''),
-    description: new FormControl(''),
-    data: new FormControl(''),
+    title: new FormControl(),
+    description: new FormControl(),
+    date: new FormControl(),
   });
 
   submitApplication() {
-    //console.log(this.applyForm.value)
+    const {title, description, date} = this.applyForm.getRawValue();
     const todo: Todo = {
-      id: 9999,
-      title: this.applyForm.value.title!,
-      description:this.applyForm.value.description!,
-      date: this.applyForm.value.data!,
+      id: uuidv4(),
+      title,
+      description,
+      date,
       completed: false
     };
-    this.todosService.overwritingTodo(todo)
+
+    const test = [todo,todo, todo]
+
+    this.todosService.rerecordTodo(test)
   }
 }
 

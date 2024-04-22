@@ -7,22 +7,26 @@ import {Todo} from "./todo"
 export class TodosService {
 
   // Получение всех записей
-  getAllTodo(): string{
-    const todos = localStorage.getItem("todo");
-    return todos ? JSON.parse(todos) : null;
-  }
+  getAllTodo(): Todo[] {
 
-  // Перезапись записей
-  overwritingTodo(todoList:object) {
-
-    const todos =  localStorage.getItem("todo")
-
-    if (todos !== null){
-
-    }else {
-      localStorage.setItem("todo", JSON.stringify(todoList))
+    Storage.prototype['getObj'] = function(key: string) {
+      const item = this.getItem(key);
+      if (item === null) return null;
+      return JSON.parse(item);
     }
 
-    console.log(localStorage.getItem("todo"))
+    return localStorage['getObj']("todo");
+  }
+
+
+
+  // Перезапись записей
+  rerecordTodo(todos:object) {
+
+    Storage.prototype['setObj'] = function(key: string, obj: any) {
+      return this.setItem(key, JSON.stringify(obj))
+    }
+
+    localStorage['setObj']("todo", todos)
   }
 }
