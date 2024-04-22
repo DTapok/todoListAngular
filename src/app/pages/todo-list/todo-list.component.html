@@ -1,8 +1,8 @@
-<!--    *ngFor="let todo of todoList" -->
 <section>
-  <app-todo-description
-
-    [todo]="todo1">
-  </app-todo-description>
+  @for (item of todoList; track item.id){
+    <app-todo-description
+      [todo]="item">
+    </app-todo-description>
+  }
   <a [routerLink]="['/new']" class="btn-new">+</a>
 </section>

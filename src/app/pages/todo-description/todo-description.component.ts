@@ -11,6 +11,6 @@ import {RouterModule} from '@angular/router';
   styleUrl: './todo-description.component.css'
 })
 export class TodoDescriptionComponent {
-  @Input() todo!: Todo;
+  @Input({required: true}) todo!: Todo;
   protected readonly Date = Date;
 }
