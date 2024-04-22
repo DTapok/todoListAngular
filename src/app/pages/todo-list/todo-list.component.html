@@ -1,8 +1,9 @@
 <section>
-  @for (item of todoList; track item.id){
+  @for (item of todoForm.controls; track item.value.id){
     <app-todo-description
       [todo]="item">
     </app-todo-description>
   }
+
   <a [routerLink]="['/new']" class="btn-new">+</a>
 </section>

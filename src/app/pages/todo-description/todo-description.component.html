@@ -1,15 +1,16 @@
-<section class="todo">
-  @if (todo.completed){
+<form [formGroup]="todo" class="todo">
+  @if (todo.getRawValue().completed){
     <div class="todo-progress completed">+</div>
-  } @else if (Date.parse(this.todo.date ) < Date.now()){
+  } @else if (Date.parse(this.todo.getRawValue().date ) < Date.now()){
     <div class="todo-progress expired">-</div>
   } @else {
     <div class="todo-progress"></div>
   }
-  <p class="todo-text">{{ todo.title }}</p>
-  <p class="todo-text">{{ todo.description }}</p>
-  <p class="todo-text">{{todo.date | date: 'dd/MM/yyyy'}}</p>
+  <!-- <input [formControl]="todo.controls.title"> -->
 
-  <a class="btn-edit" [routerLink]="['/edit', todo.id]">Edit</a>
+  <p class="todo-text">{{ todo.getRawValue().title }}</p>
+  <p class="todo-text">{{ todo.getRawValue().description }}</p>
+  <p class="todo-text">{{todo.getRawValue().date | date: 'dd/MM/yyyy'}}</p>
 
-</section>
+  <a class="btn-edit" [routerLink]="['/edit', todo.getRawValue().id]">Edit</a>
+</form>
