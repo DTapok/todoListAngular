@@ -1,16 +1,33 @@
-<form [formGroup]="todo" class="todo">
-  @if (todo.getRawValue().completed){
-    <div class="todo-progress completed">+</div>
-  } @else if (Date.parse(this.todo.getRawValue().date ) < Date.now()){
-    <div class="todo-progress expired">-</div>
-  } @else {
-    <div class="todo-progress"></div>
-  }
-  <!-- <input [formControl]="todo.controls.title"> -->
 
-  <p class="todo-text">{{ todo.getRawValue().title }}</p>
-  <p class="todo-text">{{ todo.getRawValue().description }}</p>
-  <p class="todo-text">{{todo.getRawValue().date | date: 'dd/MM/yyyy'}}</p>
+  <form [formGroup]="formGroupTodo" (ngSubmit)="submit(formGroupTodo.getRawValue())" class="todo">
+<!--    @if (todo.getRawValue().completed){-->
+<!--      <div class="todo-progress completed">+</div>-->
+<!--    } @else if (Date.parse(this.todo.getRawValue().date ) < Date.now()){-->
+<!--      <div class="todo-progress expired">-</div>-->
+<!--    } @else {-->
+<!--      <div class="todo-progress"></div>-->
+<!--    }-->
 
-  <a class="btn-edit" [routerLink]="['/edit', todo.getRawValue().id]">Edit</a>
-</form>
+<!--    <p class="todo-text">{{ todo.getRawValue().title }}</p>-->
+<!--    <p class="todo-text">{{ todo.getRawValue().description }}</p>-->
+<!--    <p class="todo-text">{{todo.getRawValue().date | date: 'dd/MM/yyyy'}}</p>-->
+    <label for="title">Title</label>
+    <input id="title" [formControl]="formGroupTodo.controls.title">
+
+    <label for="desc">Description</label>
+    <input id="desc" [formControl]="formGroupTodo.controls.description">
+
+    <label for="date">Date</label>
+    <input type="date" id="date" [formControl]="formGroupTodo.controls.date">
+
+    <label for="completed">Completed</label>
+    <input type="checkbox" id="completed" [formControl]="formGroupTodo.controls.completed">
+    <button  [type]="formGroupTodo.disabled ? 'submit'  : 'button'" (click)="changeStateForm()">{{formGroupTodo.disabled ? 'Редактировать' : 'Сохранить'}}</button>
+  </form>
+
+<button class="btn-edit" (click)="changeEdit()">
+  EDIT
+</button>
+
+<button class="btn-edit" (click)="deleteTodo()">DELETE</button>
+

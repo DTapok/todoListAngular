@@ -1,7 +1,6 @@
-import {Component, inject} from '@angular/core';
+import {Component, EventEmitter,Output} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {TodosService} from "../../todos.service";
 import {Todo} from '../../todo';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -14,8 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
 })
 
 export class NewTodoComponent {
-  todosService: TodosService = inject(TodosService);
-
+  @Output() newItemEvent = new EventEmitter<string>();
   applyForm = new FormGroup({
     title: new FormControl(),
     description: new FormControl(),
@@ -32,9 +30,7 @@ export class NewTodoComponent {
       completed: false
     };
 
-    const test = [todo,todo, todo]
-
-    this.todosService.rerecordTodo(test)
+    this.newItemEvent.emit(JSON.stringify(todo));
   }
 }
 

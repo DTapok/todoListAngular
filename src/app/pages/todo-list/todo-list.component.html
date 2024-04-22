@@ -1,9 +1,7 @@
 <section>
-  @for (item of todoForm.controls; track item.value.id){
-    <app-todo-description
-      [todo]="item">
-    </app-todo-description>
+  @for (formGroupTodo of formArrayTodo.controls; track formGroupTodo.value.id){
+    <app-todo-description [formGroupTodo]="formGroupTodo" (newItemEvent)="deleteTodo($event)"/>
   }
-
-  <a [routerLink]="['/new']" class="btn-new">+</a>
+  <!--<a [routerLink]="['/new']" class="btn-new">+</a> -->
+  <app-new-todo (newItemEvent)="addTodo($event)"></app-new-todo>
 </section>

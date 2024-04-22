@@ -3,20 +3,24 @@ import {TodoDescriptionComponent} from "../todo-description/todo-description.com
 import {TodosService} from '../../todos.service'
 import {IFormGroupTodo} from "../../todo";
 import {RouterModule} from '@angular/router';
-import { FormsModule, ReactiveFormsModule, FormGroup, FormArray, FormBuilder} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule, FormGroup, FormArray, FormBuilder} from "@angular/forms";
+import {EditTodoComponent} from "../edit-todo/edit-todo.component";
+import {NewTodoComponent} from "../new-todo/new-todo.component";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-todo-list',
   standalone: true,
-  imports: [TodoDescriptionComponent,RouterModule, FormsModule, ReactiveFormsModule],
+  imports: [TodoDescriptionComponent, RouterModule, FormsModule, ReactiveFormsModule, EditTodoComponent, NewTodoComponent],
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.css'
 })
 export class TodoListComponent implements OnDestroy, OnInit{
-  todosService: TodosService = inject(TodosService);
-  todoForm!: FormArray<FormGroup<IFormGroupTodo>>;
+  public todosService: TodosService = inject(TodosService);
+  public formArrayTodo!: FormArray<FormGroup<IFormGroupTodo>>;
 
   private nnfb = new FormBuilder().nonNullable;
+  private subForm?: Subscription;
 
   ngOnInit(): void {
     const newArr = this.nnfb.array<FormGroup<IFormGroupTodo>>([])
@@ -29,16 +33,46 @@ export class TodoListComponent implements OnDestroy, OnInit{
         date: this.nnfb.control(item.date),
         completed: this.nnfb.control(item.completed),
       })
+
       newArr.controls.push(newGroup);
     }
 
-    this.todoForm = newArr;
+    this.formArrayTodo = newArr;
 
-    console.log(this.todoForm.getRawValue())
+    this.subForm = this.formArrayTodo.valueChanges.subscribe((data) => {
+      console.log(data)
+      // this.todosService.rerecordTodo(this.todoForm.getRawValue())
+    })
   }
 
   ngOnDestroy() {
-    // Передача объкта в хранилище  this.todosService.rerecordTodo(test)
-  //   this.todoForm.getRawValue()
+    // Метод работает, но при закрытии и перезагрузке нет
   }
+
+  addTodo(item: string): void {
+
+    const newTodo = JSON.parse(item)
+
+    const newGroup = this.nnfb.group<IFormGroupTodo>({
+      id: this.nnfb.control(newTodo.id),
+      title: this.nnfb.control(newTodo.title),
+      description: this.nnfb.control(newTodo.description),
+      date: this.nnfb.control(newTodo.date),
+      completed: this.nnfb.control(newTodo.completed),
+    })
+
+    this.formArrayTodo.push(newGroup)
+    this.todosService.rerecordTodo(this.formArrayTodo.getRawValue())
+  }
+
+  deleteTodo(item: string){
+    // Получаем todo
+    let newTodo = JSON.parse(item)
+    this.formArrayTodo.controls.splice(this.formArrayTodo.controls.indexOf(newTodo), 1);
+    this.subForm?.unsubscribe();
+  }
+
+  testMethod(){}
+
+
 }

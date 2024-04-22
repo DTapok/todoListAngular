@@ -11,16 +11,6 @@ const routeConfig: Routes = [
     title: 'My List',
   },
   {
-    path: 'details/:id',
-    component: TodoDescriptionComponent,
-    title: 'Todo',
-  },
-  {
-    path: 'edit/:id',
-    component: EditTodoComponent,
-    title: 'Edit Todo',
-  },
-  {
     path: 'new',
     component: NewTodoComponent,
     title: 'New Todo',

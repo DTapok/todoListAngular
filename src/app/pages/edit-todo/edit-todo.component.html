@@ -1,1 +1,11 @@
-<p>edit-todo works!</p>
+<form  [formGroup]="todo" class="todo">
+
+  <label for="title">Title</label>
+  <input id="title" [formControl]="todo.controls.title">
+
+  <label for="desc">Description</label>
+  <input id="desc" [formControl]="todo.controls.description">
+
+  <label for="date">Date</label>
+  <input type="date" id="date" [formControl]="todo.controls.date">
+</form>
