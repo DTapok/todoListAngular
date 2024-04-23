@@ -21,9 +21,6 @@ export class TodoDescriptionComponent implements OnInit{
     this.formGroupTodo.disable();
   }
 
-  changeEdit(){
-    this.edit = !this.edit;
-  }
 
   changeStateForm(){
     if (this.formGroupTodo.disabled){
