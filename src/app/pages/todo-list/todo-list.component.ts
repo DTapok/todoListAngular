@@ -4,7 +4,6 @@ import {TodosService} from '../../todos.service'
 import {IFormGroupTodo} from "../../todo";
 import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule, FormGroup, FormArray, FormBuilder} from "@angular/forms";
-import {EditTodoComponent} from "../edit-todo/edit-todo.component";
 import {NewTodoComponent} from "../new-todo/new-todo.component";
 import {Subscription} from "rxjs";
 import {TuiDay} from "@taiga-ui/cdk";
@@ -12,7 +11,7 @@ import {TuiDay} from "@taiga-ui/cdk";
 @Component({
   selector: 'app-todo-list',
   standalone: true,
-  imports: [TodoDescriptionComponent, RouterModule, FormsModule, ReactiveFormsModule, EditTodoComponent, NewTodoComponent],
+  imports: [TodoDescriptionComponent, RouterModule, FormsModule, ReactiveFormsModule, NewTodoComponent],
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.scss'
 })
@@ -20,19 +19,22 @@ export class TodoListComponent implements OnDestroy, OnInit{
   public todosService: TodosService = inject(TodosService);
   public formArrayTodo!: FormArray<FormGroup<IFormGroupTodo>>;
 
-  private nnfb = new FormBuilder().nonNullable;
+  private nfb = new FormBuilder().nonNullable;
   private subForm?: Subscription;
 
   ngOnInit(): void {
-    const newArr = this.nnfb.array<FormGroup<IFormGroupTodo>>([])
+    const newArr = this.nfb.array<FormGroup<IFormGroupTodo>>([])
 
     for (const item of  this.todosService.getAllTodo()) {
-      const newGroup = this.nnfb.group<IFormGroupTodo>({
-        id: this.nnfb.control(item.id),
-        title: this.nnfb.control(item.title),
-        description: this.nnfb.control(item.description),
-        date: this.nnfb.control(item.date),
-        completed: this.nnfb.control(item.completed),
+      const dateStr = item.date.toString().split("-");
+
+      const newGroup = this.nfb.group<IFormGroupTodo>({
+
+        id: this.nfb.control(item.id),
+        title: this.nfb.control(item.title),
+        description: this.nfb.control(item.description),
+        date: this.nfb.control(new TuiDay (Number(dateStr[0]), Number(dateStr[1])-1, Number(dateStr[2]))),
+        completed: this.nfb.control(item.completed),
       })
 
       newArr.controls.push(newGroup);
@@ -40,10 +42,10 @@ export class TodoListComponent implements OnDestroy, OnInit{
 
     this.formArrayTodo = newArr;
 
-    this.subForm = this.formArrayTodo.valueChanges.subscribe((data) => {
-      console.log(data)
-      // this.todosService.rerecordTodo(this.todoForm.getRawValue())
-    })
+    /*this.subForm = this.formArrayTodo.valueChanges.subscribe((data) => {
+       console.log(data)
+       this.todosService.rerecordTodo(this.todoForm.getRawValue())
+    })*/
   }
 
   ngOnDestroy() {
@@ -51,20 +53,29 @@ export class TodoListComponent implements OnDestroy, OnInit{
   }
 
   addTodo(item: string): void {
-
     const newTodo = JSON.parse(item)
-    const date = newTodo.date.split("-")
+    let newGroup: FormGroup;
+    if(newTodo.date){
+      const date = newTodo.date.split("-")
 
+      newGroup = this.nfb.group<IFormGroupTodo>({
+        id: this.nfb.control(newTodo.id),
+        title: this.nfb.control(newTodo.title),
+        description: this.nfb.control(newTodo.description),
+        date: this.nfb.control(new TuiDay (Number(date[0]), Number(date[1])-1, Number(date[2]))),
+        completed: this.nfb.control(newTodo.completed),
+      })
+    } else {
+      const date = new Date().toLocaleDateString().split('.');
 
-    const newGroup = this.nnfb.group<IFormGroupTodo>({
-      id: this.nnfb.control(newTodo.id),
-      title: this.nnfb.control(newTodo.title),
-      description: this.nnfb.control(newTodo.description),
-      date: this.nnfb.control(new TuiDay (Number(date[0]), Number(date[1]), Number(date[2]))),
-      completed: this.nnfb.control(newTodo.completed),
-    })
-
-    console.log(newGroup.getRawValue().date)
+      newGroup = this.nfb.group<IFormGroupTodo>({
+        id: this.nfb.control(newTodo.id),
+        title: this.nfb.control(newTodo.title),
+        description: this.nfb.control(newTodo.description),
+        date: this.nfb.control(new TuiDay (Number(date[2]), Number(date[1])-1, Number(date[0])+1)),
+        completed: this.nfb.control(newTodo.completed),
+      })
+    }
 
     this.formArrayTodo.push(newGroup)
     this.todosService.rerecordTodo(this.formArrayTodo.getRawValue())
@@ -75,9 +86,10 @@ export class TodoListComponent implements OnDestroy, OnInit{
     let newTodo = JSON.parse(item)
     this.formArrayTodo.controls.splice(this.formArrayTodo.controls.indexOf(newTodo), 1);
     this.subForm?.unsubscribe();
+    this.todosService.rerecordTodo(this.formArrayTodo.getRawValue())
   }
 
-  testMethod(){}
-
-
+  changeTodo(){
+    this.todosService.rerecordTodo(this.formArrayTodo.getRawValue())
+  }
 }

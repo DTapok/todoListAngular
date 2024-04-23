@@ -1,0 +1,15 @@
+.todo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .todo__textarea{
+    min-width: 300px;
+    max-width: 300px;
+  }
+
+  @media screen and (max-width: 81.25em){
+    flex-direction: column;
+  }
+}
+
+

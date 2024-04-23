@@ -1,0 +1,10 @@
+.todo-header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+
+  .todo-header__logo:hover{
+    opacity: 0.6;
+  }
+}

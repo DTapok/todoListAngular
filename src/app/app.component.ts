@@ -3,11 +3,12 @@ import { TuiRootModule, TuiDialogModule, TuiAlertModule, TUI_SANITIZER } from "@
 import { Component } from '@angular/core';
 import { RouterOutlet, RouterModule, RouterLink } from '@angular/router';
 import {TodoListComponent} from "./pages/todo-list/todo-list.component";
+import {NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TodoListComponent, RouterModule, RouterLink, TuiRootModule, TuiDialogModule, TuiAlertModule],
+  imports: [RouterOutlet, TodoListComponent, RouterModule, RouterLink, TuiRootModule, TuiDialogModule, TuiAlertModule, NgOptimizedImage],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
     providers: [{provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}]

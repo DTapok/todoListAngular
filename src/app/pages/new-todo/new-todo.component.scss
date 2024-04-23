@@ -1,0 +1,11 @@
+.new-todo{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  min-width: 60vw;
+
+  .new-todo__form{
+    width: 100%;
+  }
+}

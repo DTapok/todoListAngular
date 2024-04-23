@@ -2,21 +2,22 @@ import {Component, Input, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {IFormGroupTodo} from '../../todo';
 import {FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {EditTodoComponent} from "../edit-todo/edit-todo.component";
 import { Output, EventEmitter } from '@angular/core';
-import {TuiInputDateModule, TuiInputModule} from "@taiga-ui/kit";
+import {TuiCheckboxLabeledModule, TuiInputDateModule, TuiInputModule, TuiTextareaModule} from "@taiga-ui/kit";
+import {TuiButtonModule} from "@taiga-ui/core";
 @Component({
   selector: 'app-todo-description',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, EditTodoComponent, TuiInputModule, TuiInputDateModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TuiInputModule, TuiInputDateModule, TuiCheckboxLabeledModule, TuiButtonModule, TuiTextareaModule],
   templateUrl: './todo-description.component.html',
   styleUrl: './todo-description.component.scss'
 })
 export class TodoDescriptionComponent implements OnInit{
   @Input({required: true}) formGroupTodo!: FormGroup<IFormGroupTodo>;
-  @Output() newItemEvent = new EventEmitter<string>();
+  @Output() newItemEventDelete = new EventEmitter<string>();
+  @Output() newItemEventChange = new EventEmitter<string>();
   protected readonly Date = Date;
-
+  nowDate = new Date();
 
   ngOnInit() {
     this.formGroupTodo.disable();
@@ -29,13 +30,10 @@ export class TodoDescriptionComponent implements OnInit{
     }else {
       this.formGroupTodo.disable();
     }
-  }
-
-  submit(value: any){
-    console.log(value)
+    this.newItemEventChange.emit();
   }
 
   deleteTodo(){
-    this.newItemEvent.emit(JSON.stringify(this.formGroupTodo.getRawValue()));
+    this.newItemEventDelete.emit(JSON.stringify(this.formGroupTodo.getRawValue()));
   }
 }

@@ -1,12 +1,25 @@
-<section class="todo-form">
-  <h2 class="tui-text_h4">Create new Todo!</h2>
-  <form [formGroup]="applyForm" (submit)="submitApplication()">
-    <label for="title">Title</label>
-    <input id="title" type="text" formControlName="title" />
-    <label for="description">Description</label>
-    <input id="description" type="text" formControlName="description" />
-    <label for="date">Expiration date</label>
-    <tui-input-date id="date" type="date" formControlName="date" />
-    <button type="submit" class="primary">Apply now</button>
+<section class="new-todo">
+  <h2 class="tui-text_h4">Создать новое Todo!</h2>
+  <form class="new-todo__form" [formGroup]="applyForm" (submit)="submitApplication()">
+    <div class="tui-form__row">
+      <tui-textarea formControlName="title" >Заголовок</tui-textarea>
+    </div>
+
+    <div class="tui-form__row">
+      <tui-textarea formControlName="description" >Описание</tui-textarea>
+    </div>
+
+    <div class="tui-form__row">
+      <tui-input-date formControlName="date" >Дата окончания</tui-input-date>
+    </div>
+
+    <div class="tui-form__buttons">
+      <button size="l"
+              tuiButton
+              class="tui-form__button"
+              type="submit"
+      >Создать!
+      </button>
+    </div>
   </form>
 </section>

@@ -1,26 +1,55 @@
 
-  <form [formGroup]="formGroupTodo" (ngSubmit)="submit(formGroupTodo.getRawValue())" class="todo">
+  <form [formGroup]="formGroupTodo" class="todo">
+
+    @if (formGroupTodo.getRawValue().completed){
+    <h3 class="tui-form__header" style="color: var(--tui-link);">TODO</h3>
+    } @else if (this.nowDate.toLocaleDateString() > this.formGroupTodo.getRawValue().date.toString()){
+      <h3 class="tui-form__header" style="color: var(--tui-negative);">TODO</h3>
+    } @else {
+      <h3 class="tui-form__header" style="color: var(--tui-text-03);">TODO</h3>
+    }
 
     <div class="tui-form__row">
-      <label class="tui-form__header tui-form__header_margin-top_none" for="title">Заголовок</label>
-      <tui-input id="title" [formControl]="formGroupTodo.controls.title"/>
+      <tui-textarea class="todo__textarea" [expandable]="true" [formControl]="formGroupTodo.controls.title">Заголовок Todo</tui-textarea>
     </div>
 
     <div class="tui-form__row">
-      <label class="tui-form__header tui-form__header_margin-top_none" for="desc">Описание</label>
-      <tui-input id="desc" [formControl]="formGroupTodo.controls.description"/>
+      <tui-textarea class="todo__textarea" [expandable]="true" [formControl]="formGroupTodo.controls.description">Описание Todo</tui-textarea>
     </div>
 
     <div class="tui-form__row">
-      <label for="date">Date</label>
-      <tui-input-date type="date" id="date" [formControl]="formGroupTodo.controls.date"/>
+      <tui-input-date [formControl]="formGroupTodo.controls.date">Дата окончания Todo</tui-input-date>
     </div>
 
-    <label for="completed">Completed</label>
-    <input type="checkbox" id="completed" [formControl]="formGroupTodo.controls.completed">
-    <button  [type]="formGroupTodo.disabled ? 'submit'  : 'button'" (click)="changeStateForm()">{{formGroupTodo.disabled ? 'Редактировать' : 'Сохранить'}}</button>
+    <div class="tui-form__row">
+      <tui-checkbox-labeled [formControl]="formGroupTodo.controls.completed">Завершен Todo</tui-checkbox-labeled>
+    </div>
+
+
+    <div class="tui-form__buttons">
+      <button
+      size="m"
+      tuiButton
+      type="submit"
+      class="tui-form__button"
+      [type]="formGroupTodo.disabled ? 'submit'  : 'button'"
+      (click)="changeStateForm()">{{formGroupTodo.disabled ? 'Редактировать' : 'Сохранить'}}
+    </button>
+      <button
+        appearance="flat"
+        size="m"
+        tuiButton
+        type="button"
+        class="tui-form__button"
+        (click)="deleteTodo()">
+        Удалить
+      </button>
+    </div>
+
+
+
   </form>
 
-  <button class="btn-edit" (click)="deleteTodo()">DELETE</button>
+
 
 
