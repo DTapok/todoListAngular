@@ -9,7 +9,7 @@ import {TodoListComponent} from "./pages/todo-list/todo-list.component";
   standalone: true,
   imports: [RouterOutlet, TodoListComponent, RouterModule, RouterLink, TuiRootModule, TuiDialogModule, TuiAlertModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+  styleUrl: './app.component.scss',
     providers: [{provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}]
 })
 export class AppComponent {

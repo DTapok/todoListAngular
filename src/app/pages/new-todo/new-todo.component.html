@@ -1,12 +1,12 @@
 <section class="todo-form">
-  <h2 class="section-heading">Create new Todo!</h2>
+  <h2 class="tui-text_h4">Create new Todo!</h2>
   <form [formGroup]="applyForm" (submit)="submitApplication()">
     <label for="title">Title</label>
     <input id="title" type="text" formControlName="title" />
     <label for="description">Description</label>
     <input id="description" type="text" formControlName="description" />
     <label for="date">Expiration date</label>
-    <input id="date" type="date" formControlName="date" />
+    <tui-input-date id="date" type="date" formControlName="date" />
     <button type="submit" class="primary">Apply now</button>
   </form>
 </section>

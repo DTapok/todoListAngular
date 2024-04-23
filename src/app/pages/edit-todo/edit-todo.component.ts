@@ -8,7 +8,7 @@ import {RouterLink} from "@angular/router";
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './edit-todo.component.html',
-  styleUrl: './edit-todo.component.css'
+  styleUrl: './edit-todo.component.scss'
 })
 export class EditTodoComponent {
   @Input({required: true}) todo!: FormGroup<IFormGroupTodo>;

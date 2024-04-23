@@ -7,13 +7,14 @@ import {FormsModule, ReactiveFormsModule, FormGroup, FormArray, FormBuilder} fro
 import {EditTodoComponent} from "../edit-todo/edit-todo.component";
 import {NewTodoComponent} from "../new-todo/new-todo.component";
 import {Subscription} from "rxjs";
+import {TuiDay} from "@taiga-ui/cdk";
 
 @Component({
   selector: 'app-todo-list',
   standalone: true,
   imports: [TodoDescriptionComponent, RouterModule, FormsModule, ReactiveFormsModule, EditTodoComponent, NewTodoComponent],
   templateUrl: './todo-list.component.html',
-  styleUrl: './todo-list.component.css'
+  styleUrl: './todo-list.component.scss'
 })
 export class TodoListComponent implements OnDestroy, OnInit{
   public todosService: TodosService = inject(TodosService);
@@ -52,14 +53,18 @@ export class TodoListComponent implements OnDestroy, OnInit{
   addTodo(item: string): void {
 
     const newTodo = JSON.parse(item)
+    const date = newTodo.date.split("-")
+
 
     const newGroup = this.nnfb.group<IFormGroupTodo>({
       id: this.nnfb.control(newTodo.id),
       title: this.nnfb.control(newTodo.title),
       description: this.nnfb.control(newTodo.description),
-      date: this.nnfb.control(newTodo.date),
+      date: this.nnfb.control(new TuiDay (Number(date[0]), Number(date[1]), Number(date[2]))),
       completed: this.nnfb.control(newTodo.completed),
     })
+
+    console.log(newGroup.getRawValue().date)
 
     this.formArrayTodo.push(newGroup)
     this.todosService.rerecordTodo(this.formArrayTodo.getRawValue())

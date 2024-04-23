@@ -4,18 +4,19 @@ import {IFormGroupTodo} from '../../todo';
 import {FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {EditTodoComponent} from "../edit-todo/edit-todo.component";
 import { Output, EventEmitter } from '@angular/core';
+import {TuiInputDateModule, TuiInputModule} from "@taiga-ui/kit";
 @Component({
   selector: 'app-todo-description',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, EditTodoComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, EditTodoComponent, TuiInputModule, TuiInputDateModule],
   templateUrl: './todo-description.component.html',
-  styleUrl: './todo-description.component.css'
+  styleUrl: './todo-description.component.scss'
 })
 export class TodoDescriptionComponent implements OnInit{
   @Input({required: true}) formGroupTodo!: FormGroup<IFormGroupTodo>;
   @Output() newItemEvent = new EventEmitter<string>();
   protected readonly Date = Date;
-  edit = false
+
 
   ngOnInit() {
     this.formGroupTodo.disable();

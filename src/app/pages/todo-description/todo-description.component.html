@@ -1,29 +1,26 @@
 
   <form [formGroup]="formGroupTodo" (ngSubmit)="submit(formGroupTodo.getRawValue())" class="todo">
-<!--    @if (todo.getRawValue().completed){-->
-<!--      <div class="todo-progress completed">+</div>-->
-<!--    } @else if (Date.parse(this.todo.getRawValue().date ) < Date.now()){-->
-<!--      <div class="todo-progress expired">-</div>-->
-<!--    } @else {-->
-<!--      <div class="todo-progress"></div>-->
-<!--    }-->
 
-<!--    <p class="todo-text">{{ todo.getRawValue().title }}</p>-->
-<!--    <p class="todo-text">{{ todo.getRawValue().description }}</p>-->
-<!--    <p class="todo-text">{{todo.getRawValue().date | date: 'dd/MM/yyyy'}}</p>-->
-    <label for="title">Title</label>
-    <input id="title" [formControl]="formGroupTodo.controls.title">
+    <div class="tui-form__row">
+      <label class="tui-form__header tui-form__header_margin-top_none" for="title">Заголовок</label>
+      <tui-input id="title" [formControl]="formGroupTodo.controls.title"/>
+    </div>
 
-    <label for="desc">Description</label>
-    <input id="desc" [formControl]="formGroupTodo.controls.description">
+    <div class="tui-form__row">
+      <label class="tui-form__header tui-form__header_margin-top_none" for="desc">Описание</label>
+      <tui-input id="desc" [formControl]="formGroupTodo.controls.description"/>
+    </div>
 
-    <label for="date">Date</label>
-    <input type="date" id="date" [formControl]="formGroupTodo.controls.date">
+    <div class="tui-form__row">
+      <label for="date">Date</label>
+      <tui-input-date type="date" id="date" [formControl]="formGroupTodo.controls.date"/>
+    </div>
 
     <label for="completed">Completed</label>
     <input type="checkbox" id="completed" [formControl]="formGroupTodo.controls.completed">
     <button  [type]="formGroupTodo.disabled ? 'submit'  : 'button'" (click)="changeStateForm()">{{formGroupTodo.disabled ? 'Редактировать' : 'Сохранить'}}</button>
   </form>
 
-<button class="btn-edit" (click)="deleteTodo()">DELETE</button>
+  <button class="btn-edit" (click)="deleteTodo()">DELETE</button>
+
 

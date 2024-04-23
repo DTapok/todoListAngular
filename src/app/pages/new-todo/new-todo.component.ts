@@ -3,13 +3,14 @@ import {RouterModule} from '@angular/router';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {Todo} from '../../todo';
 import { v4 as uuidv4 } from 'uuid';
+import {TuiInputDateModule} from "@taiga-ui/kit";
 
 @Component({
   selector: 'app-new-todo',
   standalone: true,
-  imports: [RouterModule,ReactiveFormsModule],
+  imports: [RouterModule, ReactiveFormsModule, TuiInputDateModule],
   templateUrl: './new-todo.component.html',
-  styleUrl: './new-todo.component.css'
+  styleUrl: './new-todo.component.scss'
 })
 
 export class NewTodoComponent {
