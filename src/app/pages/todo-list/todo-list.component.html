@@ -1,6 +1,14 @@
 <section class="todo-list">
   <app-new-todo (newItemEvent)="addTodo($event)" />
-  @for (formGroupTodo of formArrayTodo.controls; track formGroupTodo.value.id){
+
+  <!--
+     @for (formGroupTodo of formArrayTodo.controls; track formGroupTodo.value.id){
     <app-todo-description [formGroupTodo]="formGroupTodo" (newItemEventChange)="changeTodo()" (newItemEventDelete)="deleteTodo($event)"/>
   }
+   -->
+
+  @for (todo of todosStore.query(getAllEntities()); track todo.id){
+    <app-todo-description [todo]="todo" (newItemEventChange)="changeTodo($event)" (newItemEventDelete)="deleteTodo($event)"/>
+  }
+
 </section>

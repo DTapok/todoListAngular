@@ -15,7 +15,7 @@ import { TuiButtonModule, TuiErrorModule, TuiHintModule } from "@taiga-ui/core";
 })
 
 export class NewTodoComponent {
-  @Output() newItemEvent = new EventEmitter<string>();
+  @Output() newItemEvent = new EventEmitter<Todo>();
   applyForm = new FormGroup({
     title: new FormControl('', Validators.required),
     description: new FormControl(),
@@ -33,10 +33,8 @@ export class NewTodoComponent {
         completed: false
       };
 
-      this.newItemEvent.emit(JSON.stringify(todo));
+      this.newItemEvent.emit(todo);
       this.applyForm.reset()
-    } else {
-      alert("Должен быть заполнин как минимум заголовок!")
     }
   }
 }
