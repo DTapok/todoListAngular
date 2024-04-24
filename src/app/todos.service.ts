@@ -11,7 +11,7 @@ export class TodosService {
 
     Storage.prototype['getObj'] = function(key: string) {
       const item = this.getItem(key);
-      if (item === null) return null;
+      if (item === null) return [];
       return JSON.parse(item);
     }
 

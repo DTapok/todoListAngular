@@ -1,15 +1,15 @@
 import {Component, EventEmitter,Output} from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {Todo} from '../../todo';
 import { v4 as uuidv4 } from 'uuid';
 import {TuiInputDateModule, TuiInputModule, TuiTextareaModule} from "@taiga-ui/kit";
-import {TuiButtonModule} from "@taiga-ui/core";
+import { TuiButtonModule, TuiErrorModule, TuiHintModule } from "@taiga-ui/core";
 
 @Component({
   selector: 'app-new-todo',
   standalone: true,
-  imports: [RouterModule, ReactiveFormsModule, TuiInputDateModule, TuiInputModule, TuiButtonModule, TuiTextareaModule],
+  imports: [RouterModule, ReactiveFormsModule, TuiInputDateModule, TuiInputModule, TuiButtonModule, TuiTextareaModule, TuiErrorModule, TuiHintModule],
   templateUrl: './new-todo.component.html',
   styleUrl: './new-todo.component.scss'
 })
@@ -17,7 +17,7 @@ import {TuiButtonModule} from "@taiga-ui/core";
 export class NewTodoComponent {
   @Output() newItemEvent = new EventEmitter<string>();
   applyForm = new FormGroup({
-    title: new FormControl(),
+    title: new FormControl('', Validators.required),
     description: new FormControl(),
     date: new FormControl(),
   });

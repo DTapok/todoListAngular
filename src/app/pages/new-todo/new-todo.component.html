@@ -1,16 +1,26 @@
 <section class="new-todo">
   <h2 class="tui-text_h4">Создать новое Todo!</h2>
   <form class="new-todo__form" [formGroup]="applyForm" (submit)="submitApplication()">
+    @if (applyForm.controls.title; as controlTitle){
+      <div class="tui-form__row">
+        <tui-textarea [formControl]="controlTitle">Заголовок</tui-textarea>
+        @if (controlTitle.invalid && (controlTitle.dirty || controlTitle.touched)) {
+          @if (controlTitle.hasError("required")) {
+            <tui-error
+              [formControl]="controlTitle"
+              error="Поле обязательно к заполнению"
+            />
+          }
+        }
+      </div>
+    }
+
     <div class="tui-form__row">
-      <tui-textarea formControlName="title" >Заголовок</tui-textarea>
+      <tui-textarea [formControl]="applyForm.controls.description" >Описание</tui-textarea>
     </div>
 
     <div class="tui-form__row">
-      <tui-textarea formControlName="description" >Описание</tui-textarea>
-    </div>
-
-    <div class="tui-form__row">
-      <tui-input-date formControlName="date" >Дата окончания</tui-input-date>
+      <tui-input-date [formControl]="applyForm.controls.date" >Дата окончания</tui-input-date>
     </div>
 
     <div class="tui-form__buttons">
@@ -18,6 +28,11 @@
               tuiButton
               class="tui-form__button"
               type="submit"
+              [tuiHint]="applyForm.invalid && 'Заплните формулу'"
+              tuiHintDescribe
+              tuiHintDirection="right"
+              tuiHintAppearance="onDark"
+              [disabled]="applyForm.invalid"
       >Создать!
       </button>
     </div>

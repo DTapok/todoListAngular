@@ -1,5 +1,5 @@
 <section class="todo-list">
-  <app-new-todo (newItemEvent)="addTodo($event)"></app-new-todo>
+  <app-new-todo (newItemEvent)="addTodo($event)" />
   @for (formGroupTodo of formArrayTodo.controls; track formGroupTodo.value.id){
     <app-todo-description [formGroupTodo]="formGroupTodo" (newItemEventChange)="changeTodo()" (newItemEventDelete)="deleteTodo($event)"/>
   }
