@@ -1,15 +1,15 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {IFormGroupTodo, Todo} from '../../todo';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import { Output, EventEmitter } from '@angular/core';
 import {TuiCheckboxLabeledModule, TuiInputDateModule, TuiInputModule, TuiTextareaModule} from "@taiga-ui/kit";
-import {TuiButtonModule} from "@taiga-ui/core";
+import {TuiButtonModule, TuiErrorModule, TuiHintModule} from "@taiga-ui/core";
 
 @Component({
   selector: 'app-todo-description',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, TuiInputModule, TuiInputDateModule, TuiCheckboxLabeledModule, TuiButtonModule, TuiTextareaModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TuiInputModule, TuiInputDateModule, TuiCheckboxLabeledModule, TuiButtonModule, TuiTextareaModule, TuiHintModule, TuiErrorModule],
   templateUrl: './todo-description.component.html',
   styleUrl: './todo-description.component.scss'
 })
@@ -24,7 +24,7 @@ export class TodoDescriptionComponent implements OnInit{
   ngOnInit() {
     this.formGroupTodo = new FormGroup<IFormGroupTodo>( {
       id: this.nfb.control(this.todo.id),
-      title: this.nfb.control(this.todo.title),
+      title: this.nfb.control(this.todo.title, Validators.required),
       description: this.nfb.control(this.todo.description),
       date: this.nfb.control(this.todo.date),
       completed: this.nfb.control(this.todo.completed),

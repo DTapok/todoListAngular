@@ -6,7 +6,7 @@ import {Todo} from "./todo"
 })
 export class TodosService {
 
-  // Получение всех записей
+  // Получение всех Todo
   getAllTodo(): Todo[] {
 
     Storage.prototype['getObj'] = function(key: string) {
@@ -18,9 +18,7 @@ export class TodosService {
     return localStorage['getObj']("todo");
   }
 
-
-
-  // Перезапись записей
+  // Перезапись Todo
   rerecordTodo(todos:object) {
 
     Storage.prototype['setObj'] = function(key: string, obj: any) {

@@ -20,6 +20,7 @@ export class NewTodoComponent {
     title: new FormControl('', Validators.required),
     description: new FormControl(),
     date: new FormControl(),
+
   });
 
   submitApplication() {

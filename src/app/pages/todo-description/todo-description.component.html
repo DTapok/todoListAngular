@@ -9,9 +9,20 @@
       <h3 class="tui-form__header" style="color: var(--tui-text-03);">TODO</h3>
     }
 
-    <div class="tui-form__row">
-      <tui-textarea class="todo__textarea" [expandable]="true" [formControl]="formGroupTodo.controls.title">Заголовок Todo</tui-textarea>
-    </div>
+
+    @if (formGroupTodo.controls.title; as controlTitle){
+      <div class="tui-form__row">
+        <tui-textarea class="todo__textarea"  [formControl]="formGroupTodo.controls.title">Заголовок</tui-textarea>
+        @if (controlTitle.invalid && (controlTitle.dirty || controlTitle.touched)) {
+          @if (controlTitle.hasError("required")) {
+            <tui-error ngDefaultControl
+              [formControl]="controlTitle"
+              error="Поле обязательно к заполнению"
+            />
+          }
+        }
+      </div>
+    }
 
     <div class="tui-form__row">
       <tui-textarea class="todo__textarea" [expandable]="true" [formControl]="formGroupTodo.controls.description">Описание Todo</tui-textarea>
@@ -32,6 +43,11 @@
       tuiButton
       type="submit"
       class="tui-form__button"
+      [tuiHint]="formGroupTodo.invalid && 'Заплните формулу'"
+      tuiHintDescribe
+      tuiHintDirection="right"
+      tuiHintAppearance="onDark"
+      [disabled]="formGroupTodo.invalid"
       [type]="formGroupTodo.disabled ? 'submit'  : 'button'"
       (click)="changeStateForm()">{{formGroupTodo.disabled ? 'Редактировать' : 'Сохранить'}}
     </button>

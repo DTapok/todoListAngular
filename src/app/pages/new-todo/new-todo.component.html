@@ -6,7 +6,7 @@
         <tui-textarea [formControl]="controlTitle">Заголовок</tui-textarea>
         @if (controlTitle.invalid && (controlTitle.dirty || controlTitle.touched)) {
           @if (controlTitle.hasError("required")) {
-            <tui-error
+            <tui-error ngDefaultControl
               [formControl]="controlTitle"
               error="Поле обязательно к заполнению"
             />
